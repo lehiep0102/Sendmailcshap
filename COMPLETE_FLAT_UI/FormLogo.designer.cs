@@ -52,9 +52,9 @@
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.label1.Location = new System.Drawing.Point(286, 268);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(292, 39);
+            this.label1.Size = new System.Drawing.Size(339, 39);
             this.label1.TabIndex = 1;
-            this.label1.Text = "RJ Code Advance";
+            this.label1.Text = "Oliver Code Advance";
             // 
             // FormLogo
             // 

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Timers;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace COMPLETE_FLAT_UI
@@ -148,11 +148,13 @@ namespace COMPLETE_FLAT_UI
 
         private void tmExpandirMenu_Tick(object sender, EventArgs e)
         {
-            if (panelMenu.Width >= 230)
-                this.tmExpandirMenu.Stop();
-            else
-                panelMenu.Width = panelMenu.Width + 5;
-            
+
+            // if (panelMenu.Width >= 230)
+            //     this.tmExpandirMenu.Stop();
+            //else
+            //    panelMenu.Width = panelMenu.Width + 5;
+            ThreadOne();
+            button2_Click(sender, e);
         }
 
         private void tmContraerMenu_Tick(object sender, EventArgs e)
@@ -206,6 +208,28 @@ namespace COMPLETE_FLAT_UI
             AbrirFormEnPanel(frm);
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FormListaClientes fm = new FormListaClientes();
+            fm.FormClosed += new FormClosedEventHandler(MostrarFormLogoAlCerrarForms);
+            AbrirFormEnPanel(fm);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelContenedorForm_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         //METODO PARA HORA Y FECHA ACTUAL ----------------------------------------------------------
         private void tmFechaHora_Tick(object sender, EventArgs e)
         {
@@ -219,5 +243,9 @@ namespace COMPLETE_FLAT_UI
             AbrirFormEnPanel(new Form1());
         }
 
+        private static void ThreadOne()
+        {
+            Thread.Sleep(1000);
+        }
     }
 }

@@ -74,3 +74,4 @@ D:\traning\git\ModernFlat-GUI-Version-Completa-C-Sharp\COMPLETE_FLAT_UI\obj\Debu
 D:\traning\git\ModernFlat-GUI-Version-Completa-C-Sharp\COMPLETE_FLAT_UI\bin\Debug\Oracle.ManagedDataAccess.dll
 D:\traning\git\ModernFlat-GUI-Version-Completa-C-Sharp\COMPLETE_FLAT_UI\obj\Debug\COMPLETE_FLAT_UI.csproj.ResolveComReference.cache
 D:\traning\git\ModernFlat-GUI-Version-Completa-C-Sharp\COMPLETE_FLAT_UI\obj\Debug\COMPLETE_FLAT_UI.csproj.CopyComplete
+D:\traning\git\ModernFlat-GUI-Version-Completa-C-Sharp\COMPLETE_FLAT_UI\bin\Debug\FontAwesome.Sharp.dll
