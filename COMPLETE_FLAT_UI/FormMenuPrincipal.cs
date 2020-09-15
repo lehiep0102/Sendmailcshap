@@ -253,6 +253,14 @@ namespace COMPLETE_FLAT_UI
             Thread.Sleep(1000);
         }
 
+        private void btnSalir_Click_1(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Bạn có chắc chắn đóng chương trình không?", "Cảnh Báo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
+
         private void LoadParameterFromConfigFile()
         {
             try
