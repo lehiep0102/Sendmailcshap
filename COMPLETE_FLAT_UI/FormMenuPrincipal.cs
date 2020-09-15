@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace COMPLETE_FLAT_UI
 {
@@ -18,11 +19,12 @@ namespace COMPLETE_FLAT_UI
         public FormMenuPrincipal()
         {
             InitializeComponent();
-            //Estas lineas eliminan los parpadeos del formulario o controles en la interfaz grafica (Pero no en un 100%)
+            //Những dòng này loại bỏ sự nhấp nháy của biểu mẫu hoặc điều khiển trong giao diện đồ họa (Nhưng không phải 100%)
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.DoubleBuffered = true;
+            LoadParameterFromConfigFile();
         }
-        //METODO PARA REDIMENCIONAR/CAMBIAR TAMAÑO A FORMULARIO  TIEMPO DE EJECUCION ----------------------------------------------------------
+        //PHƯƠNG PHÁP ĐẶT LẠI / THAY ĐỔI KÍCH THƯỚC ĐỂ ĐỊNH DẠNG THỜI GIAN CHẠY ----------------------------------------------------------
         private int tolerance = 15;
         private const int WM_NCHITTEST = 132;
         private const int HTBOTTOMRIGHT = 17;
@@ -127,14 +129,14 @@ namespace COMPLETE_FLAT_UI
         private void btnMenu_Click(object sender, EventArgs e)
         {
             //-------CON EFECTO SLIDING
-            if (panelMenu.Width == 230)
+           /* if (panelMenu.Width == 230)
             {
                 this.tmContraerMenu.Start();
             }
             else if (panelMenu.Width == 55)
             {
                 this.tmExpandirMenu.Start();
-            }
+            } */
 
             //-------SIN EFECTO 
             //if (panelMenu.Width == 55)
@@ -159,10 +161,11 @@ namespace COMPLETE_FLAT_UI
 
         private void tmContraerMenu_Tick(object sender, EventArgs e)
         {
-            if (panelMenu.Width <= 55)
+           /* if (panelMenu.Width <= 55)
                 this.tmContraerMenu.Stop();
             else
                 panelMenu.Width = panelMenu.Width - 5;
+           */
         }
 
         //METODO PARA ABRIR FORM DENTRO DE PANEL-----------------------------------------------------
@@ -187,6 +190,7 @@ namespace COMPLETE_FLAT_UI
         private void FormMenuPrincipal_Load(object sender, EventArgs e)
         {
             MostrarFormLogo();
+            button2_Click(sender, e);
         }
         //METODO PARA MOSTRAR FORMULARIO DE LOGO Al CERRAR OTROS FORM ----------------------------------------------------------
         private void MostrarFormLogoAlCerrarForms(object sender, FormClosedEventArgs e)
@@ -196,9 +200,10 @@ namespace COMPLETE_FLAT_UI
         //METODOS PARA ABRIR OTROS FORMULARIOS Y MOSTRAR FORM DE LOGO Al CERRAR ----------------------------------------------------------
         private void btnListaClientes_Click(object sender, EventArgs e)
         {
+            /*
             FormListaClientes fm = new FormListaClientes();
             fm.FormClosed += new FormClosedEventHandler(MostrarFormLogoAlCerrarForms);
-            AbrirFormEnPanel(fm);
+            AbrirFormEnPanel(fm);*/
         }
 
         private void btnMembresia_Click(object sender, EventArgs e)
@@ -210,7 +215,7 @@ namespace COMPLETE_FLAT_UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FormListaClientes fm = new FormListaClientes();
+            Formlistemail fm = new Formlistemail();
             fm.FormClosed += new FormClosedEventHandler(MostrarFormLogoAlCerrarForms);
             AbrirFormEnPanel(fm);
         }
@@ -246,6 +251,51 @@ namespace COMPLETE_FLAT_UI
         private static void ThreadOne()
         {
             Thread.Sleep(1000);
+        }
+
+        private void LoadParameterFromConfigFile()
+        {
+            try
+            {
+                
+                //Load ORACLE connection string                    
+                Common.ORACLE_SERVER =          GetConfigValue("ORACLE_SERVER");
+                Common.ORACLE_PORT =            GetConfigValue("ORACLE_PORT");
+                Common.ORACLE_SERVICE_NAME =    GetConfigValue("ORACLE_SERVICE_NAME");
+                Common.ORACLE_USER =            GetConfigValue("ORACLE_USER");
+                Common.ORACLE_PASSWORD =        GetConfigValue("ORACLE_PASSWORD");
+                //load infor email 
+                Common.SMTP_SERVER =            GetConfigValue("SMTP_SERVER");
+                Common.SMTP_PORT =              GetConfigValue("SMTP_PORT");
+                Common.SMTP_USERNAME =          GetConfigValue("SMTP_USERNAME");
+                Common.SMTP_PASSWORD =          GetConfigValue("SMTP_PASSWORD");
+                Common.MAIL_FROM =              GetConfigValue("MAIL_FROM");
+                Common.MAIL_FROM_NAME =         GetConfigValue("MAIL_FROM_NAME");
+               
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error when loading config information. System will be down automatically. ", "Thông báo");
+                Application.Exit();
+            }
+
+        }
+        private string GetConfigValue(string configCode)
+        {
+            string strTemp = string.Empty;
+            try
+            {
+ 
+                strTemp = ConfigurationManager.AppSettings[configCode].ToString();
+
+                return strTemp;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error when loading config information. System will be down automatically. ", "Thông báo");
+                return string.Empty;
+            }
+
         }
     }
 }

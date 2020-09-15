@@ -13,7 +13,7 @@ namespace COMPLETE_FLAT_UI
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        {   
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMenuPrincipal());

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace COMPLETE_FLAT_UI.Properties {
+namespace MAS_EMAIL.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace COMPLETE_FLAT_UI.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("COMPLETE_FLAT_UI.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MAS_EMAIL.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -297,6 +297,16 @@ namespace COMPLETE_FLAT_UI.Properties {
             get {
                 object obj = ResourceManager.GetObject("Planes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Request_Contract_opening_11March2020 {
+            get {
+                object obj = ResourceManager.GetObject("Request_Contract_opening_11March2020", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

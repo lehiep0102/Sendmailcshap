@@ -7,12 +7,12 @@
     <ProjectGuid>{2C6921B3-8558-4914-8254-11C9EE505B00}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>COMPLETE_FLAT_UI</RootNamespace>
-    <AssemblyName>COMPLETE_FLAT_UI</AssemblyName>
+    <RootNamespace>MAS_EMAIL</RootNamespace>
+    <AssemblyName>MAS_EMAIL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>D:\Programacion\instaladores\</PublishUrl>
+    <PublishUrl>D:\work\git\cshap\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -46,6 +46,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>5DC12FED69455C5A8A9A1DE0E520C128CB66939E</ManifestCertificateThumbprint>
@@ -54,10 +55,17 @@
     <ManifestKeyFile>COMPLETE_FLAT_UI_ClaveTemporal.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.Sharp, Version=5.14.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -67,8 +75,10 @@
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,6 +89,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="oraclereal.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="emailsend.cs" />
     <Compile Include="ip.cs" />
     <Compile Include="DBUtils.cs" />
@@ -89,11 +101,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormListaClientes.cs">
+    <Compile Include="Formlistemail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormListaClientes.designer.cs">
-      <DependentUpon>FormListaClientes.cs</DependentUpon>
+    <Compile Include="Formlistemail.designer.cs">
+      <DependentUpon>Formlistemail.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogo.cs">
       <SubType>Form</SubType>
@@ -101,11 +113,11 @@
     <Compile Include="FormLogo.designer.cs">
       <DependentUpon>FormLogo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMantCliente.cs">
+    <Compile Include="Formdetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMantCliente.designer.cs">
-      <DependentUpon>FormMantCliente.cs</DependentUpon>
+    <Compile Include="Formdetails.designer.cs">
+      <DependentUpon>Formdetails.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMembresia.cs">
       <SubType>Form</SubType>
@@ -121,23 +133,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test\FormMenuPrincipal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="test\FormMenuPrincipal.Designer.cs">
-      <DependentUpon>FormMenuPrincipal.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormListaClientes.resx">
-      <DependentUpon>FormListaClientes.cs</DependentUpon>
+    <EmbeddedResource Include="Formlistemail.resx">
+      <DependentUpon>Formlistemail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogo.resx">
       <DependentUpon>FormLogo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMantCliente.resx">
-      <DependentUpon>FormMantCliente.cs</DependentUpon>
+    <EmbeddedResource Include="Formdetails.resx">
+      <DependentUpon>Formdetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMembresia.resx">
       <DependentUpon>FormMembresia.cs</DependentUpon>
@@ -155,11 +161,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="test\FormMenuPrincipal.resx">
-      <DependentUpon>FormMenuPrincipal.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="data\Request_Contract_opening_11March2020.dotx" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -174,6 +177,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Request_Contract_opening_11March2020.dotx" />
     <None Include="Resources\satellite-dish %281%29.png" />
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +298,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\email.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

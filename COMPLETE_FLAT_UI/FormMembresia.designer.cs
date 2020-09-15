@@ -149,7 +149,7 @@
             this.BtnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnCerrar.FlatAppearance.BorderSize = 0;
             this.BtnCerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnCerrar.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Close;
+            this.BtnCerrar.Image = global::MAS_EMAIL.Properties.Resources.Close;
             this.BtnCerrar.Location = new System.Drawing.Point(0, 0);
             this.BtnCerrar.Name = "BtnCerrar";
             this.BtnCerrar.Size = new System.Drawing.Size(43, 43);

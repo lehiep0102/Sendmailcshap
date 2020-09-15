@@ -36,11 +36,6 @@
             this.lbFecha = new System.Windows.Forms.Label();
             this.lblHora = new System.Windows.Forms.Label();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.PanelBarraTitulo = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tmExpandirMenu = new System.Windows.Forms.Timer(this.components);
-            this.tmContraerMenu = new System.Windows.Forms.Timer(this.components);
-            this.tmFechaHora = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.PictureBox();
             this.btnMenu = new System.Windows.Forms.PictureBox();
@@ -55,15 +50,19 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.PanelBarraTitulo = new System.Windows.Forms.Panel();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnNormal = new System.Windows.Forms.Button();
             this.btnMinimizar = new System.Windows.Forms.Button();
             this.btnMaximizar = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
+            this.tmExpandirMenu = new System.Windows.Forms.Timer(this.components);
+            this.tmContraerMenu = new System.Windows.Forms.Timer(this.components);
+            this.tmFechaHora = new System.Windows.Forms.Timer(this.components);
             this.panelContenedorPrincipal.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelMenu.SuspendLayout();
-            this.PanelBarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSalir)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -72,6 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.PanelBarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.SuspendLayout();
             // 
@@ -157,49 +157,6 @@
             this.panelMenu.TabIndex = 2;
             this.panelMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMenu_Paint);
             // 
-            // PanelBarraTitulo
-            // 
-            this.PanelBarraTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(61)))), ((int)(((byte)(92)))));
-            this.PanelBarraTitulo.Controls.Add(this.pictureBox8);
-            this.PanelBarraTitulo.Controls.Add(this.label1);
-            this.PanelBarraTitulo.Controls.Add(this.btnNormal);
-            this.PanelBarraTitulo.Controls.Add(this.btnMinimizar);
-            this.PanelBarraTitulo.Controls.Add(this.btnMaximizar);
-            this.PanelBarraTitulo.Controls.Add(this.btnCerrar);
-            this.PanelBarraTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelBarraTitulo.Location = new System.Drawing.Point(0, 0);
-            this.PanelBarraTitulo.Name = "PanelBarraTitulo";
-            this.PanelBarraTitulo.Size = new System.Drawing.Size(1100, 43);
-            this.PanelBarraTitulo.TabIndex = 1;
-            this.PanelBarraTitulo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelBarraTitulo_MouseDown);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(35, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 16);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "ASM SYSTEM";
-            // 
-            // tmExpandirMenu
-            // 
-            this.tmExpandirMenu.Enabled = true;
-            this.tmExpandirMenu.Interval = 5000;
-            this.tmExpandirMenu.Tick += new System.EventHandler(this.tmExpandirMenu_Tick);
-            // 
-            // tmContraerMenu
-            // 
-            this.tmContraerMenu.Interval = 15;
-            this.tmContraerMenu.Tick += new System.EventHandler(this.tmContraerMenu_Tick);
-            // 
-            // tmFechaHora
-            // 
-            this.tmFechaHora.Enabled = true;
-            this.tmFechaHora.Tick += new System.EventHandler(this.tmFechaHora_Tick);
-            // 
             // button2
             // 
             this.button2.Cursor = System.Windows.Forms.Cursors.Default;
@@ -209,7 +166,7 @@
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.Silver;
-            this.button2.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Dashboard;
+            this.button2.Image = global::MAS_EMAIL.Properties.Resources.Dashboard;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.Location = new System.Drawing.Point(3, 88);
             this.button2.Name = "button2";
@@ -225,7 +182,7 @@
             // 
             this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSalir.Image = global::COMPLETE_FLAT_UI.Properties.Resources.shut_down;
+            this.btnSalir.Image = global::MAS_EMAIL.Properties.Resources.shut_down;
             this.btnSalir.Location = new System.Drawing.Point(9, 511);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(43, 37);
@@ -237,7 +194,7 @@
             // 
             this.btnMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMenu.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMenu.Image = global::COMPLETE_FLAT_UI.Properties.Resources.menu2;
+            this.btnMenu.Image = global::MAS_EMAIL.Properties.Resources.menu2;
             this.btnMenu.Location = new System.Drawing.Point(181, 2);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(43, 37);
@@ -294,7 +251,7 @@
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.Silver;
-            this.button6.Image = global::COMPLETE_FLAT_UI.Properties.Resources.APs;
+            this.button6.Image = global::MAS_EMAIL.Properties.Resources.APs;
             this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button6.Location = new System.Drawing.Point(3, 264);
             this.button6.Name = "button6";
@@ -323,7 +280,7 @@
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.Silver;
-            this.button3.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Planes;
+            this.button3.Image = global::MAS_EMAIL.Properties.Resources.Planes;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.Location = new System.Drawing.Point(3, 218);
             this.button3.Name = "button3";
@@ -352,7 +309,7 @@
             this.btnMembresia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMembresia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMembresia.ForeColor = System.Drawing.Color.Silver;
-            this.btnMembresia.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Membresia;
+            this.btnMembresia.Image = global::MAS_EMAIL.Properties.Resources.Membresia;
             this.btnMembresia.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMembresia.Location = new System.Drawing.Point(3, 172);
             this.btnMembresia.Name = "btnMembresia";
@@ -391,7 +348,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Silver;
-            this.button1.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Dashboard;
+            this.button1.Image = global::MAS_EMAIL.Properties.Resources.Dashboard;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.Location = new System.Drawing.Point(3, 126);
             this.button1.Name = "button1";
@@ -404,9 +361,25 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // PanelBarraTitulo
+            // 
+            this.PanelBarraTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(61)))), ((int)(((byte)(92)))));
+            this.PanelBarraTitulo.Controls.Add(this.pictureBox8);
+            this.PanelBarraTitulo.Controls.Add(this.label1);
+            this.PanelBarraTitulo.Controls.Add(this.btnNormal);
+            this.PanelBarraTitulo.Controls.Add(this.btnMinimizar);
+            this.PanelBarraTitulo.Controls.Add(this.btnMaximizar);
+            this.PanelBarraTitulo.Controls.Add(this.btnCerrar);
+            this.PanelBarraTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PanelBarraTitulo.Location = new System.Drawing.Point(0, 0);
+            this.PanelBarraTitulo.Name = "PanelBarraTitulo";
+            this.PanelBarraTitulo.Size = new System.Drawing.Size(1100, 43);
+            this.PanelBarraTitulo.TabIndex = 1;
+            this.PanelBarraTitulo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelBarraTitulo_MouseDown);
+            // 
             // pictureBox8
             // 
-            this.pictureBox8.Image = global::COMPLETE_FLAT_UI.Properties.Resources.satellite_dish__1_;
+            this.pictureBox8.Image = global::MAS_EMAIL.Properties.Resources.satellite_dish__1_;
             this.pictureBox8.Location = new System.Drawing.Point(9, 9);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(28, 28);
@@ -414,13 +387,24 @@
             this.pictureBox8.TabIndex = 5;
             this.pictureBox8.TabStop = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(35, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 16);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "ASM SYSTEM";
+            // 
             // btnNormal
             // 
             this.btnNormal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNormal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNormal.FlatAppearance.BorderSize = 0;
             this.btnNormal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNormal.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Normal;
+            this.btnNormal.Image = global::MAS_EMAIL.Properties.Resources.Normal;
             this.btnNormal.Location = new System.Drawing.Point(996, 0);
             this.btnNormal.Name = "btnNormal";
             this.btnNormal.Size = new System.Drawing.Size(43, 43);
@@ -435,7 +419,7 @@
             this.btnMinimizar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMinimizar.FlatAppearance.BorderSize = 0;
             this.btnMinimizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimizar.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Minimize;
+            this.btnMinimizar.Image = global::MAS_EMAIL.Properties.Resources.Minimize;
             this.btnMinimizar.Location = new System.Drawing.Point(950, 0);
             this.btnMinimizar.Name = "btnMinimizar";
             this.btnMinimizar.Size = new System.Drawing.Size(43, 43);
@@ -449,7 +433,7 @@
             this.btnMaximizar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMaximizar.FlatAppearance.BorderSize = 0;
             this.btnMaximizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximizar.Image = global::COMPLETE_FLAT_UI.Properties.Resources.maximize3;
+            this.btnMaximizar.Image = global::MAS_EMAIL.Properties.Resources.maximize3;
             this.btnMaximizar.Location = new System.Drawing.Point(996, 0);
             this.btnMaximizar.Name = "btnMaximizar";
             this.btnMaximizar.Size = new System.Drawing.Size(43, 43);
@@ -463,13 +447,28 @@
             this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCerrar.FlatAppearance.BorderSize = 0;
             this.btnCerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrar.Image = global::COMPLETE_FLAT_UI.Properties.Resources.Close;
+            this.btnCerrar.Image = global::MAS_EMAIL.Properties.Resources.Close;
             this.btnCerrar.Location = new System.Drawing.Point(1043, 2);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(39, 39);
             this.btnCerrar.TabIndex = 0;
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
+            // 
+            // tmExpandirMenu
+            // 
+            this.tmExpandirMenu.Interval = 5000;
+            this.tmExpandirMenu.Tick += new System.EventHandler(this.tmExpandirMenu_Tick);
+            // 
+            // tmContraerMenu
+            // 
+            this.tmContraerMenu.Interval = 15;
+            this.tmContraerMenu.Tick += new System.EventHandler(this.tmContraerMenu_Tick);
+            // 
+            // tmFechaHora
+            // 
+            this.tmFechaHora.Enabled = true;
+            this.tmFechaHora.Tick += new System.EventHandler(this.tmFechaHora_Tick);
             // 
             // FormMenuPrincipal
             // 
@@ -489,8 +488,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panelMenu.ResumeLayout(false);
-            this.PanelBarraTitulo.ResumeLayout(false);
-            this.PanelBarraTitulo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSalir)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnMenu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -499,6 +496,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.PanelBarraTitulo.ResumeLayout(false);
+            this.PanelBarraTitulo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.ResumeLayout(false);
 

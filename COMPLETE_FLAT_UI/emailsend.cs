@@ -25,16 +25,15 @@ namespace COMPLETE_FLAT_UI
             //string tempFilePath = "";
             List<string> tempFiles = new List<string>();
             // Get setting for SMTP
-            string SMTP_SERVER = "mail.miraeasset.com.vn"; //informail[0];//"10.0.16.18";
-            int SMTP_PORT = 587;
-            string MAIL_FROM = informail[2] + "@miraeasset.com.vn";
-            string MAIL_FROM_NAME = informail[1];//"Fund Distribution";
-            string SMTP_USERNAME = informail[2];
-            string SMTP_PASSWORD = informail[3];
+            string SMTP_SERVER = Common.SMTP_SERVER;
+            int SMTP_PORT = Int32.Parse(Common.SMTP_PORT);
+            string MAIL_FROM = Common.MAIL_FROM;
+            string MAIL_FROM_NAME = Common.MAIL_FROM_NAME;
+            string SMTP_USERNAME =Common.SMTP_USERNAME;
+            string SMTP_PASSWORD = Common.SMTP_PASSWORD;
 
             // The subject line of the email
             String SUBJECT = subject;
-
             // The body of the email
             String BODY = mailBody;
 
