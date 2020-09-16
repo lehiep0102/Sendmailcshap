@@ -139,13 +139,12 @@ namespace COMPLETE_FLAT_UI
             } */
 
             //-------SIN EFECTO 
-            //if (panelMenu.Width == 55)
-            //{
-            //    panelMenu.Width = 230;
-            //}
-            //else
-
-            //    panelMenu.Width = 55;
+            if (panelMenu.Width == 55)
+            {
+                panelMenu.Width = 230;
+            }
+            else
+                panelMenu.Width = 55;
         }
 
         private void tmExpandirMenu_Tick(object sender, EventArgs e)
@@ -161,11 +160,11 @@ namespace COMPLETE_FLAT_UI
 
         private void tmContraerMenu_Tick(object sender, EventArgs e)
         {
-           /* if (panelMenu.Width <= 55)
-                this.tmContraerMenu.Stop();
-            else
-                panelMenu.Width = panelMenu.Width - 5;
-           */
+            //if (panelMenu.Width <= 55)
+              // this.tmContraerMenu.Stop();
+            //else
+              //  panelMenu.Width = panelMenu.Width - 5;
+           
         }
 
         //METODO PARA ABRIR FORM DENTRO DE PANEL-----------------------------------------------------

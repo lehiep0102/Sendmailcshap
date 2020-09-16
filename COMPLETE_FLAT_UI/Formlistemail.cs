@@ -208,73 +208,88 @@ namespace COMPLETE_FLAT_UI
                                     nvl(note4,' ')
                                     from ACNT_CT where  FILL_YN = 'N'";
 
-            OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
-
-            using (DbDataReader reader = cmd.ExecuteReader())
+            try
             {
-                if (reader.HasRows)
+                OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
+
+                using (DbDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        acnt_no = reader.GetString(0);
-                        cust_nm = reader.GetString(1);
-                        birth_dt = reader.GetString(2);
-                        ctry = reader.GetString(3);
-                        sex = reader.GetString(4);
-                        idno = reader.GetString(5);
-                        idno_iss_dt = reader.GetString(6);
-                        idno_iss_orga = reader.GetString(7);
-                        home_addr = reader.GetString(8);
-                        office_addr = reader.GetString(9);
-                        mobile = reader.GetString(10);
-                        email = reader.GetString(11);
-                        fax = reader.GetString(12);
-                        rp = reader.GetString(13);
-                        position = reader.GetString(14);
-                        poa_no = reader.GetString(15);
-                        dt_rp = reader.GetString(16);
-                        stick = reader.GetString(17);
-                        mtick = reader.GetString(18);
-                        drtick = reader.GetString(19);
-                        wtd = reader.GetString(20);
-                        cct = reader.GetString(21);
-                        acashad = reader.GetString(22);
-                        sms_tk = reader.GetString(23);
-                        sotp = reader.GetString(24);
-                        hotp = reader.GetString(25);
-                        sr_otp = reader.GetString(26);
-                        mtcar = reader.GetString(27);
-                        sr_mt = reader.GetString(28);
-                        ds = reader.GetString(29);
-                        sr_ds = reader.GetString(30);
-                        iss_by_ds = reader.GetString(31);
-                        bank1 = reader.GetString(32);
-                        bank_acc1 = reader.GetString(33);
-                        bank_name1 = reader.GetString(34);
-                        bank2 = reader.GetString(35);
-                        bank_acc2 = reader.GetString(36);
-                        bank_name2 = reader.GetString(37);
-                        bank3 = reader.GetString(38);
-                        bank_acc3 = reader.GetString(39);
-                        bank_name3 = reader.GetString(40);
-                        sc1 = reader.GetString(41);
-                        acc_sc1 = reader.GetString(42);
-                        note1 = reader.GetString(43);
-                        sc2 = reader.GetString(44);
-                        acc_sc2 = reader.GetString(45);
-                        note2 = reader.GetString(46);
-                        sc3 = reader.GetString(47);
-                        acc_sc3 = reader.GetString(48);
-                        note3 = reader.GetString(49);
-                        sc4 = reader.GetString(50);
-                        acc_sc4 = reader.GetString(51);
-                        note4 = reader.GetString(52);
-                        string datafill = filldatadocx(acnt_no, cust_nm, birth_dt, ctry, sex, idno, idno_iss_dt, idno_iss_orga, home_addr, office_addr, mobile, email, fax, rp, position, poa_no, dt_rp, stick, mtick, drtick, wtd, cct, acashad, sms_tk, sotp, hotp, sr_otp, mtcar, sr_mt, ds, sr_ds, iss_by_ds, bank1, bank_acc1, bank_name1, bank2, bank_acc2, bank_name2, bank3, bank_acc3, bank_name3, sc1, acc_sc1, note1, sc2, acc_sc2, note2, sc3, acc_sc3, note3, sc4, acc_sc4, note4);
-                        count = count + 1;
+                        while (reader.Read())
+                        {
+                            acnt_no = reader.GetString(0);
+                            cust_nm = reader.GetString(1);
+                            birth_dt = reader.GetString(2);
+                            ctry = reader.GetString(3);
+                            sex = reader.GetString(4);
+                            idno = reader.GetString(5);
+                            idno_iss_dt = reader.GetString(6);
+                            idno_iss_orga = reader.GetString(7);
+                            home_addr = reader.GetString(8);
+                            office_addr = reader.GetString(9);
+                            mobile = reader.GetString(10);
+                            email = reader.GetString(11);
+                            fax = reader.GetString(12);
+                            rp = reader.GetString(13);
+                            position = reader.GetString(14);
+                            poa_no = reader.GetString(15);
+                            dt_rp = reader.GetString(16);
+                            stick = reader.GetString(17);
+                            mtick = reader.GetString(18);
+                            drtick = reader.GetString(19);
+                            wtd = reader.GetString(20);
+                            cct = reader.GetString(21);
+                            acashad = reader.GetString(22);
+                            sms_tk = reader.GetString(23);
+                            sotp = reader.GetString(24);
+                            hotp = reader.GetString(25);
+                            sr_otp = reader.GetString(26);
+                            mtcar = reader.GetString(27);
+                            sr_mt = reader.GetString(28);
+                            ds = reader.GetString(29);
+                            sr_ds = reader.GetString(30);
+                            iss_by_ds = reader.GetString(31);
+                            bank1 = reader.GetString(32);
+                            bank_acc1 = reader.GetString(33);
+                            bank_name1 = reader.GetString(34);
+                            bank2 = reader.GetString(35);
+                            bank_acc2 = reader.GetString(36);
+                            bank_name2 = reader.GetString(37);
+                            bank3 = reader.GetString(38);
+                            bank_acc3 = reader.GetString(39);
+                            bank_name3 = reader.GetString(40);
+                            sc1 = reader.GetString(41);
+                            acc_sc1 = reader.GetString(42);
+                            note1 = reader.GetString(43);
+                            sc2 = reader.GetString(44);
+                            acc_sc2 = reader.GetString(45);
+                            note2 = reader.GetString(46);
+                            sc3 = reader.GetString(47);
+                            acc_sc3 = reader.GetString(48);
+                            note3 = reader.GetString(49);
+                            sc4 = reader.GetString(50);
+                            acc_sc4 = reader.GetString(51);
+                            note4 = reader.GetString(52);
+                            string datafill = filldatadocx(acnt_no, cust_nm, birth_dt, ctry, sex, idno, idno_iss_dt, idno_iss_orga, home_addr, office_addr, mobile, email, fax, rp, position, poa_no, dt_rp, stick, mtick, drtick, wtd, cct, acashad, sms_tk, sotp, hotp, sr_otp, mtcar, sr_mt, ds, sr_ds, iss_by_ds, bank1, bank_acc1, bank_name1, bank2, bank_acc2, bank_name2, bank3, bank_acc3, bank_name3, sc1, acc_sc1, note1, sc2, acc_sc2, note2, sc3, acc_sc3, note3, sc4, acc_sc4, note4);
+                            count = count + 1;
+                        }
                     }
                 }
             }
-            if (count ==0)
+            catch (Exception)
+            {
+                return 1;
+            }
+            finally
+            {
+
+                conn.Close();
+                conn.Dispose();
+                conn = null;
+            }
+
+            if (count == 0)
             {
                 return 1;
             }
@@ -1103,9 +1118,15 @@ namespace COMPLETE_FLAT_UI
                 cmdreal.Parameters.Add(new OracleParameter("3", OracleDbType.NVarchar2, fileType, ParameterDirection.Input));
                 cmdreal.ExecuteNonQuery();
                 real.Close();
+                real.Dispose();
             }
             string get = getpdf(acnt_nos);
-           // string refsa = "Done";
+
+            if (get == "0")
+            {
+                return "1";
+            }
+            // string refsa = "Done";
             return "0";
         }
         private string getpdf(string acnt_nos) //get pdf để send mail 
@@ -1116,6 +1137,7 @@ namespace COMPLETE_FLAT_UI
             string bytes;
             string fileName;
             string pathfile;
+            int createm;
 
             try
             {
@@ -1137,19 +1159,23 @@ namespace COMPLETE_FLAT_UI
                     //System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", pathfile));
                 }
             }
-            catch (Exception ea)
+            catch (Exception)
             {
-                return ea.Message;
+                return "1";
             }
             finally
             {
                 conn.Close();
                 conn.Dispose();
                 conn = null;
-                int createm = createemail(acnt_nos);
+                createm = createemail(acnt_nos);
             }
 
            // string refsa = "Done";
+           if (createm!=0)
+            {
+                return "1";
+            }
             return "0";
         }
         private int createemail(string acnt_no)
@@ -1158,6 +1184,8 @@ namespace COMPLETE_FLAT_UI
 
             IPAddress iddress = ip.GetLocalIPAddress();
             string user = "SYS";
+            int sem;
+
             try
             {
                 OracleCommand cmd = new OracleCommand("PACC_EM", conn);
@@ -1189,7 +1217,11 @@ namespace COMPLETE_FLAT_UI
                 conn.Close();
                 conn.Dispose();
                 conn = null;
-                int sem = sendaccon(acnt_no);
+                sem = sendaccon(acnt_no);
+            }
+            if (sem != 0)
+            {
+                return 1;
             }
             return 0;
         }
@@ -1216,8 +1248,6 @@ namespace COMPLETE_FLAT_UI
             string sql = "select t.acnt_no, t.cust_nm, t.email,t.sub,t.email_bd from ACNT_EMAIL t where t.send_yn <> 'Y' and t.acnt_no ='" + acnt_no + "'";
 
             OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
-
-
             using (DbDataReader reader = cmd.ExecuteReader())
             {
                 if (reader.HasRows)
@@ -1241,9 +1271,6 @@ namespace COMPLETE_FLAT_UI
                 }
             }
 
-            //logw logsm = new logw();
-            //int logwa = logsm.loagwrite(scc);
-            // 
             if (sescc == "0")
             {
                 int up = updatesenmail(acnt_no);
@@ -1264,9 +1291,7 @@ namespace COMPLETE_FLAT_UI
             try
             {
                 string sql = "update ACNT_EMAIL set SEND_YN = 'Y',DT_S = sysdate where acnt_no ='" + acnt_no + "'";
-
                 OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
-
                 int rowCount = cmd.ExecuteNonQuery();
                 countinser = rowCount.ToString();
             }
@@ -1279,6 +1304,7 @@ namespace COMPLETE_FLAT_UI
                 conn.Close();
                 conn.Dispose();
                 conn = null;
+                int ar = queryst();
             }
             return 1;
         }
@@ -1290,9 +1316,7 @@ namespace COMPLETE_FLAT_UI
             try
             {
                 string sql = "update ACNT_EMAIL set SEND_YN = 'E',DT_S = sysdate where acnt_no ='" + acnt_no + "'";
-
                 OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
-
                 int rowCount = cmd.ExecuteNonQuery();
                 countinser = rowCount.ToString();
             }
@@ -1305,6 +1329,7 @@ namespace COMPLETE_FLAT_UI
                 conn.Close();
                 conn.Dispose();
                 conn = null;
+                int ar = queryst();
             }
             return 0;
         }
@@ -1313,9 +1338,6 @@ namespace COMPLETE_FLAT_UI
         {
             OracleConnection conn = DBUtils.GetDBConnection();
             conn.Open();
-            // DBdb2Utils db2 = new DBdb2Utils();
-            // string a = db2.DB2Contcext();
-
             try
             {
                 string sql = "select t.send_yn,t.acnt_no,t.cust_nm,t.email,t.dt_s from ACNT_EMAIL t order by t.work_dtm desc";
@@ -1326,9 +1348,7 @@ namespace COMPLETE_FLAT_UI
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
 
-
                 System.Data.DataTable dataemail = new System.Data.DataTable();
-
                 dataemail.Columns.Add("Trạng Thái", typeof(string));
                 dataemail.Columns.Add("Số TK", typeof(string));
                 dataemail.Columns.Add("Tên Khách hàng", typeof(string));
