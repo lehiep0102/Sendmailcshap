@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     public partial class Formdetails : Form
     {

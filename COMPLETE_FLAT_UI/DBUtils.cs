@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     class DBUtils
     {

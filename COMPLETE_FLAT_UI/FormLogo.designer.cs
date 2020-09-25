@@ -1,4 +1,4 @@
-﻿namespace COMPLETE_FLAT_UI
+﻿namespace MAS_EMAIL
 {
     partial class FormLogo
     {

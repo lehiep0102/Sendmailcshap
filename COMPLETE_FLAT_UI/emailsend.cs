@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     class emailsend
     {
@@ -20,7 +20,7 @@ namespace COMPLETE_FLAT_UI
         {
 
             string[] informail = new string[4];
-           // informail = getcfmail();
+            // informail = getcfmail();
 
             //string tempFilePath = "";
             List<string> tempFiles = new List<string>();
@@ -29,7 +29,7 @@ namespace COMPLETE_FLAT_UI
             int SMTP_PORT = Int32.Parse(Common.SMTP_PORT);
             string MAIL_FROM = Common.MAIL_FROM;
             string MAIL_FROM_NAME = Common.MAIL_FROM_NAME;
-            string SMTP_USERNAME =Common.SMTP_USERNAME;
+            string SMTP_USERNAME = Common.SMTP_USERNAME;
             string SMTP_PASSWORD = Common.SMTP_PASSWORD;
 
             // The subject line of the email
@@ -60,11 +60,18 @@ namespace COMPLETE_FLAT_UI
                     //TODO: Check CC email is valid
                     if (!String.IsNullOrEmpty(attachmentsen))
                     {
-                        message.Attachments.Add(new System.Net.Mail.Attachment(attachmentsen));
+                        try
+                        {
+                            message.Attachments.Add(new System.Net.Mail.Attachment(attachmentsen));
+                        }
+                        catch
+                        {
+                            message.Attachments.Clear();
+                        }
+                       
                     }
                 }
             }
-
 
 
             if (mailTo != null && mailTo.Length > 0)
@@ -123,75 +130,75 @@ namespace COMPLETE_FLAT_UI
             try
             {
                 client.Send(message);
-                return "0";
             }
             catch (Exception ex)
             {
-                
+
                 string errordt = ex.Message;// MessageBox.Show("Gửi mail " + string.Join("*", mailTo) + ex.Message, "error");
                 return errordt;
             }
 
+            return "0";
         }
-        /*
-        static string[] getcfmail()
-        {
-            string logfile = System.IO.Directory.GetCurrentDirectory();
-            byte[] data = new byte[2049];
-            int lenbyte = 0;
-
-            string datastring = "";
-            string server = "";
-            string name = "";
-            string user = "";
-            string pass = "";
-
-            string[] add_to_array = new string[4];
-
-            DataCryption crypt = new DataCryption();
-
-            try
+            /*
+            static string[] getcfmail()
             {
-                FileStream fs = new FileStream(logfile + "\\data\\mail.cfg", FileMode.OpenOrCreate, FileAccess.Read);
-                fs.Read(data, 0, 2048);
-                fs.Close();
+                string logfile = System.IO.Directory.GetCurrentDirectory();
+                byte[] data = new byte[2049];
+                int lenbyte = 0;
 
-                for (int i = 0; i < data.Length; i++)
+                string datastring = "";
+                string server = "";
+                string name = "";
+                string user = "";
+                string pass = "";
+
+                string[] add_to_array = new string[4];
+
+                DataCryption crypt = new DataCryption();
+
+                try
                 {
-                    if (data[i] == (byte)0)
-                        break;
-                    lenbyte++;
+                    FileStream fs = new FileStream(logfile + "\\data\\mail.cfg", FileMode.OpenOrCreate, FileAccess.Read);
+                    fs.Read(data, 0, 2048);
+                    fs.Close();
+
+                    for (int i = 0; i < data.Length; i++)
+                    {
+                        if (data[i] == (byte)0)
+                            break;
+                        lenbyte++;
+                    }
+
+
+                    byte[] fixdata = new byte[lenbyte];
+
+                    Buffer.BlockCopy(data, 0, fixdata, 0, lenbyte);
+
+                    string aaaa = Encoding.UTF8.GetString(fixdata);
+
+                    string cccc = aaaa.Substring(1, aaaa.Length - 1);
+
+                    datastring = Encoding.UTF8.GetString(crypt.decrypt(Encoding.UTF8.GetBytes(cccc)));
+                    string[] split = datastring.Split('|');
+
+                    server = split[0];
+                    name = split[1];
+                    user = split[2];
+                    pass = split[3];
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
 
-
-                byte[] fixdata = new byte[lenbyte];
-
-                Buffer.BlockCopy(data, 0, fixdata, 0, lenbyte);
-
-                string aaaa = Encoding.UTF8.GetString(fixdata);
-
-                string cccc = aaaa.Substring(1, aaaa.Length - 1);
-
-                datastring = Encoding.UTF8.GetString(crypt.decrypt(Encoding.UTF8.GetBytes(cccc)));
-                string[] split = datastring.Split('|');
-
-                server = split[0];
-                name = split[1];
-                user = split[2];
-                pass = split[3];
+                add_to_array[0] = server;
+                add_to_array[1] = name;
+                add_to_array[2] = user;
+                add_to_array[3] = pass;
+                return add_to_array;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            add_to_array[0] = server;
-            add_to_array[1] = name;
-            add_to_array[2] = user;
-            add_to_array[3] = pass;
-            return add_to_array;
-        }
-        */
+            */
         public static bool RemoteServerCertificateValidationCallback(Object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             string AppLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);

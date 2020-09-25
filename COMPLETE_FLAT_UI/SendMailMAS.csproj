@@ -78,6 +78,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,17 +90,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SendEcEmail.cs" />
     <Compile Include="oraclereal.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="emailsend.cs" />
     <Compile Include="ip.cs" />
     <Compile Include="DBUtils.cs" />
     <Compile Include="DBOracleUtils.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="run.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="run.Designer.cs">
+      <DependentUpon>run.cs</DependentUpon>
     </Compile>
     <Compile Include="Formlistemail.cs">
       <SubType>Form</SubType>
@@ -133,8 +135,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="run.resx">
+      <DependentUpon>run.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formlistemail.resx">
       <DependentUpon>Formlistemail.cs</DependentUpon>

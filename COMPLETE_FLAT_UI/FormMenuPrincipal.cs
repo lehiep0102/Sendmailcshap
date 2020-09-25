@@ -11,7 +11,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Configuration;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     public partial class FormMenuPrincipal : Form
     {

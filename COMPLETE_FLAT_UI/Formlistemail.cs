@@ -14,7 +14,7 @@ using Oracle.ManagedDataAccess.Client;
 using System.Net;
 using System.Globalization;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     public partial class Formlistemail : Form
     {
@@ -54,9 +54,7 @@ namespace COMPLETE_FLAT_UI
                 frm.txtapellido.Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
                 frm.txtdireccion.Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
                 frm.txttelefono.Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
-
                 frm.ShowDialog();
-             
             }
             else
                 MessageBox.Show("vui lòng chọn một dòng dữ liệu");
@@ -64,7 +62,20 @@ namespace COMPLETE_FLAT_UI
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            int qr = queryst();
+            int qr;
+            int fille;
+            int count = ckcount();
+           // MessageBox.Show(count.ToString(), "path");
+            if (count > 0)
+            {
+                fille = qrfill();
+                qr = queryst();
+            }
+            else 
+            {
+                qr = queryst();
+            }
+           
         }
 
         private void InsertarFilas()
@@ -304,7 +315,7 @@ namespace COMPLETE_FLAT_UI
             Object oMissing = System.Reflection.Missing.Value;
             Object oTemplatePath = AppLocation + "\\Request_Contract_opening_11March2020.dotx";//global::MAS_EMAIL.Properties.Resources.Request_Contract_opening_11March2020;
             Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
-            //MessageBox.Show(oTemplatePath.ToString());
+          //  MessageBox.Show(oTemplatePath.ToString());
             Document wordDoc = new Document();
             wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
 
@@ -1020,12 +1031,12 @@ namespace COMPLETE_FLAT_UI
                 }
             }
 
-            wordDoc.SaveAs(AppLocation + acnt_no + ".docx");
-            wordDoc.SaveAs2(AppLocation + acnt_no + ".pdf", Microsoft.Office.Interop.Word.WdSaveFormat.wdFormatPDF, oMissing, oMissing, oMissing,
-            oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing);
+            wordDoc.SaveAs(AppLocation + "\\"+acnt_no + ".docx");
+            wordDoc.SaveAs2(AppLocation + "\\" + acnt_no + ".pdf", WdSaveFormat.wdFormatPDF, oMissing, oMissing, oMissing,oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing);
             //wordApp.Documents.Open("myFile.docx");
             wordDoc.Close();
             wordApp.Application.Quit();
+
             int update = updatefill(acnt_no);
             //string returnkq = "fill OK";
             return "fill OK"; 
@@ -1058,11 +1069,11 @@ namespace COMPLETE_FLAT_UI
         }
         private string insertpdf(string acnt_nos)// update nội dung pdf , update data preview HĐ, update ID vảo table ANCT_ON
         {
-            AppLocation = AppLocation.Replace("file:\\", "");
+            //AppLocation = AppLocation.Replace("file:\\", "");
             ///byte[] array;
-            string fileName = acnt_nos + ".pdf";
+            string fileName = "\\"+acnt_nos + ".pdf";
             string filepath = AppLocation + fileName;
-            string fileType = "contract_" + fileName;
+            string fileType = "contract_"+acnt_nos + ".pdf";
             //OracleParameter param = new OracleParameter();
             //OracleConnection conn = DBUtils.GetDBConnection();
             //conn.Open();
@@ -1074,12 +1085,6 @@ namespace COMPLETE_FLAT_UI
             using (OracleConnection oc = DBUtils.GetDBConnection())
             {
                 oc.Open();
-                /*fileName.Split('.')[1];
-            if (fileType == "doc" || fileType == "docx" || fileType == "pdf")
-                fileType = "application\\" + fileType;
-            else
-                fileType = "image\\" + fileType; */
-                // insert file pdf vào DB oracle 
                 string sData = Convert.ToBase64String(File.ReadAllBytes(filepath));
                 OracleCommand cmd = new OracleCommand("INSERT INTO ACNT_PDF values (:1, :2, :3, :4, SYSDATE,SYSDATE,SYSDATE,'VN','1')", oc);
                 cmd.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, acnt_nos, ParameterDirection.Input));
@@ -1105,7 +1110,7 @@ namespace COMPLETE_FLAT_UI
                 if (File.Exists(Path.Combine(filepath)))
                 {
                     File.Delete(Path.Combine(filepath));
-                    File.Delete(Path.Combine(AppLocation + acnt_nos + ".docx"));
+                    File.Delete(Path.Combine(AppLocation +"\\"+ acnt_nos + ".docx"));
                 }
                 oc.Close();
             }
@@ -1131,7 +1136,7 @@ namespace COMPLETE_FLAT_UI
         }
         private string getpdf(string acnt_nos) //get pdf để send mail 
         {
-            AppLocation = AppLocation.Replace("file:\\", "");
+           // AppLocation = AppLocation.Replace("file:\\", "");
             OracleConnection conn = DBUtils.GetDBConnection();
             conn.Open();
             string bytes;
@@ -1151,7 +1156,9 @@ namespace COMPLETE_FLAT_UI
                     fileName = sdr["acnt_no"].ToString();
                     bytes = sdr["Data"].ToString();
                 }
-                pathfile = AppLocation + "contract_" + fileName + ".pdf";
+                
+                pathfile = AppLocation +"\\data\\"+"contract_" + fileName + ".pdf";
+                //MessageBox.Show(pathfile, "path");
                 using (System.IO.FileStream stream = System.IO.File.Create(pathfile))
                 {
                     System.Byte[] byteArray = System.Convert.FromBase64String(bytes);
@@ -1239,13 +1246,12 @@ namespace COMPLETE_FLAT_UI
             string[] mailsend = new string[1];
             string[] mailcc = new string[0];
             string[] mailbcc = new string[0];
-            string pathfile = AppLocation + "contract_" + acnt_no + ".pdf";
-
+            string pathfile = AppLocation+"\\data\\" + "contract_" + acnt_no + ".pdf";
 
             OracleConnection conn = DBUtils.GetDBConnection();
-
             conn.Open();
-            string sql = "select t.acnt_no, t.cust_nm, t.email,t.sub,t.email_bd from ACNT_EMAIL t where t.send_yn <> 'Y' and t.acnt_no ='" + acnt_no + "'";
+
+            string sql = "select t.acnt_no, t.cust_nm, t.email,t.sub,t.email_bd from ACNT_EMAIL t where t.send_yn <> 'Y' and t.acnt_no like'" + acnt_no + "%'";
 
             OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
             using (DbDataReader reader = cmd.ExecuteReader())
@@ -1260,26 +1266,23 @@ namespace COMPLETE_FLAT_UI
                         sub = reader.GetString(3);
                         email_bd = reader.GetString(4);
                         file[0] = pathfile;
-
+                        /* Send email */
                         emailsend emailsn = new emailsend();
                         sescc = emailsn.SendEmail(mailsend, mailcc, mailbcc, sub, email_bd, file, acnt_noem, true);
-                        //filldata.sendmailcer  emailsn = new filldata.sendmailcer();
-                        //sescc = emailsn.SendEmail(mailsend, mailcc, mailbcc, sub, email_bd, file, acnt_noem, true);
-                        //filldata.emailweb send = new filldata.emailweb();
-                        // sescc = send.SendEmail("hiep.lv","Oliver010^", string.Join("",mailsend),sub,email_bd, System.Web.Mail.MailFormat.Html, string.Join("", file));
+ 
+                        if (sescc == "0")
+                        {
+                            int up = updatesenmail(acnt_noem);
+                        }
+                        else
+                        {
+                            int err = uperorsenmail(acnt_noem);
+                        }
                     }
                 }
             }
-
-            if (sescc == "0")
-            {
-                int up = updatesenmail(acnt_no);
-            }
-            else
-            {
-                int err = uperorsenmail(acnt_no);
-                return 1;
-            }
+            conn.Close();
+            conn.Dispose();
             return 0;
         }
 
@@ -1343,7 +1346,6 @@ namespace COMPLETE_FLAT_UI
                 string sql = "select t.send_yn,t.acnt_no,t.cust_nm,t.email,t.dt_s from ACNT_EMAIL t order by t.work_dtm desc";
 
                 OracleCommand cmd = new OracleCommand();
-
                 // Liên hợp Command với Connection.
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
@@ -1439,11 +1441,62 @@ namespace COMPLETE_FLAT_UI
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            int fille = qrfill();
-            if (fille == 0)
+
+            btnNuevo_Click(sender,e);
+        }
+        private int ckcount()
+        {
+            int rowCount=0;
+            OracleConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            string sql = @"select count(*) count from ACNT_CT where  FILL_YN = 'N'";
+            OracleCommand cmd = new OracleCommand(sql, conn);
+            try
             {
-                int qr = queryst();
+                OracleDataReader sdr = cmd.ExecuteReader();
+                sdr.Read();
+                rowCount = Int32.Parse(sdr["count"].ToString());
             }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+                conn = null;
+            }
+
+            if (rowCount > 0)
+            {
+                return rowCount;
+            }
+            else
+                return 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string emailresen = emailrs.Text;
+            int send = sendaccon(emailresen);
+            /*AppLocation = AppLocation.Replace("file:\\", "");
+            string[] file = new string[1];
+            string[] mailsend = new string[1];
+            string[] mailcc = new string[0];
+            string[] mailbcc = new string[0];
+            string sub = "test email SLL";
+            string email_bd = "adasdasdasdsadasdsadsadsadsadasdsadasdsadsadsadasd";
+            string sescc = "";
+            string acnt_no = "077C112010";
+            string pathfile = AppLocation + "contract_" + acnt_no + ".pdf";
+            string acnt_noem = acnt_no;
+            file[0] = pathfile;
+            mailsend[0] = "hiepvanle92@gmail.com";
+
+            SendEcEmail emailsn = new SendEcEmail();
+            sescc = emailsn.SendEmail(mailsend, mailcc, mailbcc, sub, email_bd, file, acnt_noem, true);
+            */
         }
     }
 }

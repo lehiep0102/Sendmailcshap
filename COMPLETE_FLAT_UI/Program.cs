@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     static class Program
     {

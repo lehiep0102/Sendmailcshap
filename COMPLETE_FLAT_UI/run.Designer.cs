@@ -1,4 +1,4 @@
-﻿namespace COMPLETE_FLAT_UI
+﻿namespace MAS_EMAIL
 {
     partial class Form1
     {
@@ -36,7 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 302);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "application";
             this.ResumeLayout(false);
 
         }

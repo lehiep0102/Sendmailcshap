@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 
-namespace COMPLETE_FLAT_UI
+namespace MAS_EMAIL
 {
     class ip
     {
