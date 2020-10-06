@@ -22,6 +22,8 @@ namespace MAS_EMAIL
         public static string SMTP_PASSWORD;
         public static string EmailCC;
         public static string EmailBCC;
+        public static string API;
+
         public static string GetSetting(string key)
         {
             return ConfigurationManager.AppSettings[key];

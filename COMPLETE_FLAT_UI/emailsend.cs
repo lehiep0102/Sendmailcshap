@@ -73,30 +73,57 @@ namespace MAS_EMAIL
                 }
             }
 
+            int maxIndex = mailTo.Length - 1;
+           // MessageBox.Show(maxIndex.ToString(), "aaa");
 
-            if (mailTo != null && mailTo.Length > 0)
+            if (maxIndex > 1)
             {
-                foreach (string emailTo in mailTo)
+                for (int idx = 0; idx < 1; idx++)
+                {
+                    if (!String.IsNullOrEmpty(mailTo[idx]))
+                    {
+                        message.To.Add(mailTo[idx]);
+                    }
+
+                }
+
+                for (int idx = 1; idx <= maxIndex; idx++)
                 {
                     //TODO: Check CC email is valid
-                    if (!String.IsNullOrEmpty(emailTo))
+                    if (!String.IsNullOrEmpty(mailTo[idx]))
                     {
-                        message.To.Add(emailTo);
+                        message.CC.Add(mailTo[idx]);
+                    }
+                   
+                }
+            } 
+            else
+            {
+                if (mailTo != null && mailTo.Length > 0)
+                {
+                    foreach (string emailTo in mailTo)
+                    {
+                        //TODO: Check CC email is valid
+                        if (!String.IsNullOrEmpty(emailTo))
+                        {
+                            message.To.Add(emailTo);
+                        }
+                    }
+                }
+
+                if (mailCC != null && mailCC.Length > 0)
+                {
+                    foreach (string emailCc in mailCC)
+                    {
+                        //TODO: Check CC email is valid
+                        if (!String.IsNullOrEmpty(emailCc))
+                        {
+                            message.CC.Add(emailCc);
+                        }
                     }
                 }
             }
 
-            if (mailCC != null && mailCC.Length > 0)
-            {
-                foreach (string emailCc in mailCC)
-                {
-                    //TODO: Check CC email is valid
-                    if (!String.IsNullOrEmpty(emailCc))
-                    {
-                        message.CC.Add(emailCc);
-                    }
-                }
-            }
             if (mailBCC != null && mailBCC.Length > 0)
             {
                 foreach (string emailBcc in mailBCC)

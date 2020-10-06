@@ -278,7 +278,8 @@ namespace MAS_EMAIL
                 Common.SMTP_PASSWORD =          GetConfigValue("SMTP_PASSWORD");
                 Common.MAIL_FROM =              GetConfigValue("MAIL_FROM");
                 Common.MAIL_FROM_NAME =         GetConfigValue("MAIL_FROM_NAME");
-               
+                Common.API            =         GetConfigValue("API");
+
             }
             catch (Exception)
             {

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Common;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Word;
@@ -13,6 +8,9 @@ using System.IO;
 using Oracle.ManagedDataAccess.Client;
 using System.Net;
 using System.Globalization;
+using Newtonsoft.Json;
+using RestSharp;
+
 
 namespace MAS_EMAIL
 {
@@ -80,7 +78,10 @@ namespace MAS_EMAIL
 
         private void InsertarFilas()
         {
-           int qr = queryst();
+           // timer1.Enabled = true;
+            //timer1.Interval = Int32.Parse(timebox.Text);
+          //  timer1.Start();
+            int qr = queryst();
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -623,6 +624,9 @@ namespace MAS_EMAIL
                     }
                     if (fieldName == "sotp")
                     {
+                        myMergeField.Select();
+                        wordApp.Selection.TypeText(char.ToString(tick));
+                        /*
                         if (sotp == "Y")
                         {
                             myMergeField.Select();
@@ -632,7 +636,7 @@ namespace MAS_EMAIL
                         {
                             myMergeField.Select();
                             wordApp.Selection.TypeText(char.ToString(nontick));
-                        }
+                        } */
                     }
                     if (fieldName == "hotp")
                     {
@@ -1071,9 +1075,9 @@ namespace MAS_EMAIL
         {
             //AppLocation = AppLocation.Replace("file:\\", "");
             ///byte[] array;
-            string fileName = "\\"+acnt_nos + ".pdf";
+            string fileName = "\\" + acnt_nos + ".pdf";
             string filepath = AppLocation + fileName;
-            string fileType = "contract_"+acnt_nos + ".pdf";
+            string fileType = "contract_" + acnt_nos + ".pdf";
             //OracleParameter param = new OracleParameter();
             //OracleConnection conn = DBUtils.GetDBConnection();
             //conn.Open();
@@ -1106,28 +1110,33 @@ namespace MAS_EMAIL
                 cmd3.Parameters.Add(new OracleParameter("2", OracleDbType.NVarchar2, acnt_nos, ParameterDirection.Input));
                 cmd3.ExecuteNonQuery();
 
-                //MessageBox.Show("fill data done");
                 if (File.Exists(Path.Combine(filepath)))
                 {
                     File.Delete(Path.Combine(filepath));
-                    File.Delete(Path.Combine(AppLocation +"\\"+ acnt_nos + ".docx"));
+                    File.Delete(Path.Combine(AppLocation + "\\" + acnt_nos + ".docx"));
                 }
                 oc.Close();
             }
-            using (OracleConnection real = MAS_EMAIL.DBUtilsreal.GetDBConnection())
-            {
-                real.Open();
-                OracleCommand cmdreal = new OracleCommand("INSERT INTO DATA_LINK values (:1, :2, :3)", real);
-                cmdreal.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, sid, ParameterDirection.Input));
-                cmdreal.Parameters.Add(new OracleParameter("2", OracleDbType.Clob, sdatalink, ParameterDirection.Input));
-                cmdreal.Parameters.Add(new OracleParameter("3", OracleDbType.NVarchar2, fileType, ParameterDirection.Input));
-                cmdreal.ExecuteNonQuery();
-                real.Close();
-                real.Dispose();
-            }
+            /*string checksever = Common.SMTP_SERVER;
+
+            if (checksever != "10.0.31.15") 
+            { 
+                 using (OracleConnection real = MAS_EMAIL.DBUtilsreal.GetDBConnection())
+                 {
+                    real.Open();
+                    OracleCommand cmdreal = new OracleCommand("INSERT INTO DATA_LINK values (:1, :2, :3)", real);
+                    cmdreal.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, sid, ParameterDirection.Input));
+                    cmdreal.Parameters.Add(new OracleParameter("2", OracleDbType.Clob, sdatalink, ParameterDirection.Input));
+                    cmdreal.Parameters.Add(new OracleParameter("3", OracleDbType.NVarchar2, fileType, ParameterDirection.Input));
+                    cmdreal.ExecuteNonQuery();
+                    real.Close();
+                    real.Dispose();
+                 }
+            } */
+            
             string get = getpdf(acnt_nos);
 
-            if (get == "0")
+            if (get != "0")
             {
                 return "1";
             }
@@ -1237,7 +1246,7 @@ namespace MAS_EMAIL
         {
             AppLocation = AppLocation.Replace("file:\\", "");
             //string scc = "";
-            string sescc = "";
+            string sescc;
             string acnt_noem;
             string cust_nm;
             string sub;
@@ -1246,12 +1255,12 @@ namespace MAS_EMAIL
             string[] mailsend = new string[1];
             string[] mailcc = new string[0];
             string[] mailbcc = new string[0];
-            string pathfile = AppLocation+"\\data\\" + "contract_" + acnt_no + ".pdf";
+            string pathfile ;
 
             OracleConnection conn = DBUtils.GetDBConnection();
             conn.Open();
 
-            string sql = "select t.acnt_no, t.cust_nm, t.email,t.sub,t.email_bd from ACNT_EMAIL t where t.send_yn <> 'Y' and t.acnt_no like'" + acnt_no + "%'";
+            string sql = "select t.acnt_no, t.cust_nm, t.email,t.sub,t.email_bd from ACNT_EMAIL t where t.send_yn <> 'Y' and t.acnt_no like'" + acnt_no + "'";
 
             OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
             using (DbDataReader reader = cmd.ExecuteReader())
@@ -1262,9 +1271,10 @@ namespace MAS_EMAIL
                     {
                         acnt_noem = reader.GetString(0);
                         cust_nm = reader.GetString(1);
-                        mailsend[0] = reader.GetString(2);
+                        mailsend = reader.GetString(2).Split(new char[] {';'});
                         sub = reader.GetString(3);
                         email_bd = reader.GetString(4);
+                        pathfile = AppLocation + "\\data\\" + "contract_" + acnt_noem + ".pdf";
                         file[0] = pathfile;
                         /* Send email */
                         emailsend emailsn = new emailsend();
@@ -1273,8 +1283,13 @@ namespace MAS_EMAIL
                         if (sescc == "0")
                         {
                             int up = updatesenmail(acnt_noem);
+                            if (up == 0)
+                            {
+                                int sdop = sendOP(acnt_noem + "*");
+                            }
+                            
                         }
-                        else
+                        else if (sescc != "0")
                         {
                             int err = uperorsenmail(acnt_noem);
                         }
@@ -1441,7 +1456,6 @@ namespace MAS_EMAIL
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             btnNuevo_Click(sender,e);
         }
         private int ckcount()
@@ -1478,8 +1492,14 @@ namespace MAS_EMAIL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string emailresen = emailrs.Text;
-            int send = sendaccon(emailresen);
+           string emailresen = emailrs.Text;
+            //int send = sendaccon(emailresen);
+            string authen = CreateObject();
+            string pathfile = AppLocation + "\\data\\" + "contract_" + emailresen + ".pdf";
+            MessageBox.Show(authen, "asdadsa");
+            var task = UploadAsync(pathfile, authen);
+            var result = task.Result;
+            MessageBox.Show(result.ToString(), "reposttoken");
             /*AppLocation = AppLocation.Replace("file:\\", "");
             string[] file = new string[1];
             string[] mailsend = new string[1];
@@ -1496,7 +1516,135 @@ namespace MAS_EMAIL
 
             SendEcEmail emailsn = new SendEcEmail();
             sescc = emailsn.SendEmail(mailsend, mailcc, mailbcc, sub, email_bd, file, acnt_noem, true);
-            */
+         
+            string checkapi = Common.API;
+            MASRequest myRequest = new MASRequest(checkapi + "/api/auth/login", "POST", "username:admin&password:12345678", "1", " ");
+            string reppon = myRequest.GetResponse();
+            MessageBox.Show(reppon, "reposttoken");
+
+            MASRequest uploadfile = new MASRequest(checkapi + "/api/common/upload", "POST", "file:" + pathfile + "&type:contract", "2", reppon);
+
+            string uloadrb = uploadfile.GetResponse();
+            MessageBox.Show(uloadrb, "uploadshow");
+             */
         }
+        private String CreateObject()
+        {
+            int repost = 0; 
+            string authean;
+            string URL = Common.API;
+            string DATA = @"{""username"":""admin"",""password"":""12345678""}";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL+ "/api/auth/login");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.ContentLength = DATA.Length;
+            using (Stream webStream = request.GetRequestStream())
+            using (StreamWriter requestWriter = new StreamWriter(webStream, System.Text.Encoding.ASCII))
+            {
+                requestWriter.Write(DATA);
+            }
+
+            try
+            {
+                WebResponse webResponse = request.GetResponse();
+                using (Stream webStream = webResponse.GetResponseStream() ?? Stream.Null)
+                using (StreamReader responseReader = new StreamReader(webStream))
+                {
+                    dynamic stuff = JsonConvert.DeserializeObject(responseReader.ReadToEnd());
+                    repost = stuff.status_code;
+                    authean = stuff.data.token;
+                }
+            }
+            catch (Exception)
+            {
+               return "false";
+
+            }
+            return authean;
+        }
+        private async Task<string> UploadAsync(string fileName,string authen)
+        {
+            string server = Common.API;
+            string value = null;
+            using (var fileStream = File.Open(fileName, FileMode.Open))
+            {
+                var client = new RestClient(server);
+                var request = new RestRequest(Method.POST);
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    await fileStream.CopyToAsync(memoryStream);
+                    request.AddFile("file", memoryStream.ToArray(), fileName);
+                    request.AlwaysMultipartFormData = true;
+                    request.AddHeader("Authorization", authen);
+
+                    var result = client.ExecuteAsync(request, (response, handle) =>
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            dynamic json = JsonConvert.DeserializeObject(response.Content);
+                            value = json.data.uri;
+                        }
+                    });
+                }
+            }
+            return value;
+        }
+        private int sendOP (string acnt_no)
+        {
+            AppLocation = AppLocation.Replace("file:\\", "");
+            //string scc = "";
+            string sescc;
+            string acnt_noem;
+            string cust_nm;
+            string sub;
+            string email_bd;
+            string[] file = new string[1];
+            string[] mailsend = new string[1];
+            string[] mailcc = new string[0];
+            string[] mailbcc = new string[0];
+            string pathfile;
+
+            OracleConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+
+            string sql = "select t.acnt_no, t.cust_nm, t.email,t.sub,t.email_bd from ACNT_EMAIL t where t.send_yn <> 'Y' and t.acnt_no like'" + acnt_no + "'";
+
+            OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
+            using (DbDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        acnt_noem = reader.GetString(0);
+                        cust_nm = reader.GetString(1);
+                        mailsend = reader.GetString(2).Split(new char[] { ';' });
+                        sub = reader.GetString(3);
+                        email_bd = reader.GetString(4);
+                        pathfile = AppLocation + "\\data\\" + "contract_" + acnt_noem + ".pdf";
+                        file[0] = pathfile;
+                        /* Send email */
+                        emailsend emailsn = new emailsend();
+                        sescc = emailsn.SendEmail(mailsend, mailcc, mailbcc, sub, email_bd, file, acnt_noem, true);
+
+                        if (sescc == "0")
+                        {
+                            int up = updatesenmail(acnt_noem);
+                        }
+                        else if (sescc != "0")
+                        {
+                            int err = uperorsenmail(acnt_noem);
+                        }
+                    }
+                }
+            }
+            conn.Close();
+            conn.Dispose();
+            return 0;
+        }
+
     }
 }
+
+    
+
