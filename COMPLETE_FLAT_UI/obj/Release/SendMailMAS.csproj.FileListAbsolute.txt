@@ -17,3 +17,5 @@ D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\SendMailMAS.csproj.
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\MAS_EMAIL.exe
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\MAS_EMAIL.pdb
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\SendMailMAS.csprojAssemblyReference.cache
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\Newtonsoft.Json.dll
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\Newtonsoft.Json.xml

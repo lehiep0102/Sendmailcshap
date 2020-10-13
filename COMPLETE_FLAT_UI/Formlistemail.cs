@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Word;
 using System.IO;
@@ -9,14 +9,21 @@ using Oracle.ManagedDataAccess.Client;
 using System.Net;
 using System.Globalization;
 using Newtonsoft.Json;
+using System.Collections.Specialized;
+using System.Web;
+using System.Web.Mvc;
+using System.Collections.Generic;
+using System.Net.Http;
 using RestSharp;
-
 
 namespace MAS_EMAIL
 {
     public partial class Formlistemail : Form
     {
         public string AppLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+
+        public object Request { get; private set; }
+
         public static bool checknull(string s)
         {
             return (s == null || string.IsNullOrEmpty(s) || s == " ") ? true : false;
@@ -78,10 +85,10 @@ namespace MAS_EMAIL
 
         private void InsertarFilas()
         {
-           // timer1.Enabled = true;
-            //timer1.Interval = Int32.Parse(timebox.Text);
-          //  timer1.Start();
-            int qr = queryst();
+            //timer1.Enabled = true;
+           // timer1.Interval = Int32.Parse(timebox.Text);
+           // timer1.Start();
+            //int qr = queryst();
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -1105,11 +1112,18 @@ namespace MAS_EMAIL
                 cmd2.ExecuteNonQuery();
 
                 //update ID thông tin preview HĐ cho bảng master
-                OracleCommand cmd3 = new OracleCommand("update ACNT_ON set IDCT = :1 where acnt_no = substr(:2,4,7)", oc);
-                cmd3.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, sid, ParameterDirection.Input));
-                cmd3.Parameters.Add(new OracleParameter("2", OracleDbType.NVarchar2, acnt_nos, ParameterDirection.Input));
-                cmd3.ExecuteNonQuery();
-
+                string token = null;
+                token = CreateObject();
+                string linkpdf = UploadPic(filepath, token);
+                if (linkpdf != null && linkpdf.Length > 0)
+                {
+                    OracleCommand cmd3 = new OracleCommand("update ACNT_ON set IDCT = :1 where acnt_no = substr(:2,4,7)", oc);
+                    cmd3.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, linkpdf, ParameterDirection.Input));
+                    cmd3.Parameters.Add(new OracleParameter("2", OracleDbType.NVarchar2, acnt_nos, ParameterDirection.Input));
+                    cmd3.ExecuteNonQuery();
+                }
+                
+                // MessageBox.Show(aaaa, "testaa");
                 if (File.Exists(Path.Combine(filepath)))
                 {
                     File.Delete(Path.Combine(filepath));
@@ -1285,6 +1299,7 @@ namespace MAS_EMAIL
                             int up = updatesenmail(acnt_noem);
                             if (up == 0)
                             {
+                                Thread.Sleep(1000);
                                 int sdop = sendOP(acnt_noem + "*");
                             }
                             
@@ -1315,7 +1330,7 @@ namespace MAS_EMAIL
             }
             catch (Exception)
             {
-                return 0;
+                return 1;
             }
             finally
             {
@@ -1324,7 +1339,7 @@ namespace MAS_EMAIL
                 conn = null;
                 int ar = queryst();
             }
-            return 1;
+            return 0;
         }
         private int uperorsenmail(string acnt_no)
         {
@@ -1492,41 +1507,10 @@ namespace MAS_EMAIL
 
         private void button1_Click(object sender, EventArgs e)
         {
+            AppLocation = AppLocation.Replace("file:\\", "");
+            string[] file = new string[0];
            string emailresen = emailrs.Text;
-            //int send = sendaccon(emailresen);
-            string authen = CreateObject();
-            string pathfile = AppLocation + "\\data\\" + "contract_" + emailresen + ".pdf";
-            MessageBox.Show(authen, "asdadsa");
-            var task = UploadAsync(pathfile, authen);
-            var result = task.Result;
-            MessageBox.Show(result.ToString(), "reposttoken");
-            /*AppLocation = AppLocation.Replace("file:\\", "");
-            string[] file = new string[1];
-            string[] mailsend = new string[1];
-            string[] mailcc = new string[0];
-            string[] mailbcc = new string[0];
-            string sub = "test email SLL";
-            string email_bd = "adasdasdasdsadasdsadsadsadsadasdsadasdsadsadsadasd";
-            string sescc = "";
-            string acnt_no = "077C112010";
-            string pathfile = AppLocation + "contract_" + acnt_no + ".pdf";
-            string acnt_noem = acnt_no;
-            file[0] = pathfile;
-            mailsend[0] = "hiepvanle92@gmail.com";
-
-            SendEcEmail emailsn = new SendEcEmail();
-            sescc = emailsn.SendEmail(mailsend, mailcc, mailbcc, sub, email_bd, file, acnt_noem, true);
-         
-            string checkapi = Common.API;
-            MASRequest myRequest = new MASRequest(checkapi + "/api/auth/login", "POST", "username:admin&password:12345678", "1", " ");
-            string reppon = myRequest.GetResponse();
-            MessageBox.Show(reppon, "reposttoken");
-
-            MASRequest uploadfile = new MASRequest(checkapi + "/api/common/upload", "POST", "file:" + pathfile + "&type:contract", "2", reppon);
-
-            string uloadrb = uploadfile.GetResponse();
-            MessageBox.Show(uloadrb, "uploadshow");
-             */
+            int resend = sendaccon(emailresen);
         }
         private String CreateObject()
         {
@@ -1555,39 +1539,12 @@ namespace MAS_EMAIL
                     authean = stuff.data.token;
                 }
             }
-            catch (Exception)
+            catch (Exception  )
             {
                return "false";
 
             }
             return authean;
-        }
-        private async Task<string> UploadAsync(string fileName,string authen)
-        {
-            string server = Common.API;
-            string value = null;
-            using (var fileStream = File.Open(fileName, FileMode.Open))
-            {
-                var client = new RestClient(server);
-                var request = new RestRequest(Method.POST);
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    await fileStream.CopyToAsync(memoryStream);
-                    request.AddFile("file", memoryStream.ToArray(), fileName);
-                    request.AlwaysMultipartFormData = true;
-                    request.AddHeader("Authorization", authen);
-
-                    var result = client.ExecuteAsync(request, (response, handle) =>
-                    {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            dynamic json = JsonConvert.DeserializeObject(response.Content);
-                            value = json.data.uri;
-                        }
-                    });
-                }
-            }
-            return value;
         }
         private int sendOP (string acnt_no)
         {
@@ -1641,6 +1598,81 @@ namespace MAS_EMAIL
             conn.Close();
             conn.Dispose();
             return 0;
+        }
+        public string UploadPic(string path, string authen)
+        {
+            string URL = Common.API;
+            string data = Convert.ToBase64String(File.ReadAllBytes(path));
+            string filename = Path.GetFileName(path);
+            string link;
+
+            string temple = @"{{""data"":""{0}"",""fileName"":""{1}"",""type"":""contract""}}";
+
+            string DATA  =  string.Format(temple,data, filename);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL + "/api/common/uploadBase64");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.Headers.Add("Authorization", "Bearer " + authen);
+            request.ContentLength = DATA.Length;
+            using (Stream webStream = request.GetRequestStream())
+            using (StreamWriter requestWriter = new StreamWriter(webStream, System.Text.Encoding.ASCII))
+            {
+                requestWriter.Write(DATA);
+            }
+
+            try
+            {
+                WebResponse webResponse = request.GetResponse();
+                using (Stream webStream = webResponse.GetResponseStream() ?? Stream.Null)
+                using (StreamReader responseReader = new StreamReader(webStream))
+                {
+                    dynamic stuff = JsonConvert.DeserializeObject(responseReader.ReadToEnd());
+                  
+                    link = stuff.data.uri;
+                }
+            }
+            catch (Exception)
+            {
+                return "";
+
+            }
+            return link;
+        }
+        public string Create(string file, string authen)
+        {
+            string URL = Common.API;
+            string link;
+            try
+            {
+                string requestBody = JsonConvert.SerializeObject(file, Formatting.Indented);
+                var client = new RestClient(URL);
+
+                var request = new RestRequest("/api/common/upload", Method.POST);
+                // .AddHeader("Accept", "application/json")
+                ///   .AddHeader("Authorization", "Bearer "+ authen);
+                // request.AlwaysMultipartFormData = false;
+                //.AddHeader("Content-Type", "application/form-data");
+                // request.AddFileBytes("file", file_get_byte_contents(file),"contract","aplication/pdf");
+                // request.AddCookie();
+                var fileContent = File.ReadAllBytes(file);
+                request.AddFileBytes("file", fileContent, file);
+               // request.AddFile("file",file);
+                request.AddParameter("type", "contract");
+               // request.AddParameter("old_url", "contract");
+                
+                var httpResponse = client.Execute(request);
+
+                string json = httpResponse.Content.ToString();
+                dynamic  document = JsonConvert.DeserializeObject(json);
+                link = document.data.uri;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+                
+            }
+            
+            return link;
         }
 
     }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\hiep.lv\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\hiep.lv\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_COMPLETE_FLAT_UI.1259291526.00" t="ExcludeRecursive" />
+    <e p="D:\work\git\cshap\Sendmailcshap" t="IncludeFlat">
+      <e p="COMPLETE_FLAT_UI" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Common.cs" t="Include" />
+        <e p="COMPLETE_FLAT_UI.csproj" t="IncludeRecursive" />
+        <e p="DBOracleUtils.cs" t="Include" />
+        <e p="DBUtils.cs" t="Include" />
+        <e p="emailsend.cs" t="Include" />
+        <e p="favicon.ico" t="Include" />
+        <e p="Form1.cs" t="Include" />
+        <e p="Form1.Designer.cs" t="Include" />
+        <e p="Form1.resx" t="Include" />
+        <e p="Formdetails.cs" t="Include" />
+        <e p="Formdetails.designer.cs" t="Include" />
+        <e p="Formdetails.resx" t="Include" />
+        <e p="Formlistemail.cs" t="Include" />
+        <e p="Formlistemail.designer.cs" t="Include" />
+        <e p="Formlistemail.resx" t="Include" />
+        <e p="FormLogo.cs" t="Include" />
+        <e p="FormLogo.designer.cs" t="Include" />
+        <e p="FormLogo.resx" t="Include" />
+        <e p="FormMembresia.cs" t="Include" />
+        <e p="FormMembresia.designer.cs" t="Include" />
+        <e p="FormMembresia.resx" t="Include" />
+        <e p="FormMenuPrincipal.cs" t="Include" />
+        <e p="FormMenuPrincipal.Designer.cs" t="Include" />
+        <e p="FormMenuPrincipal.resx" t="Include" />
+        <e p="ip.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="oraclereal.cs" t="Include" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="app.manifest" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="APs.PNG" t="Include" />
+          <e p="Close.png" t="Include" />
+          <e p="Dashboard.PNG" t="Include" />
+          <e p="email.png" t="Include" />
+          <e p="icono-cliente.png" t="Include" />
+          <e p="logoUI.png" t="Include" />
+          <e p="logoUI2.png" t="Include" />
+          <e p="maximize.png" t="Include" />
+          <e p="maximize2.png" t="Include" />
+          <e p="maximize3.png" t="Include" />
+          <e p="Membresia.PNG" t="Include" />
+          <e p="menu.png" t="Include" />
+          <e p="menu2.png" t="Include" />
+          <e p="Minimize.png" t="Include" />
+          <e p="Minimize1.png" t="Include" />
+          <e p="new logo.png" t="Include" />
+          <e p="new logo1.png" t="Include" />
+          <e p="new logo2.png" t="Include" />
+          <e p="new logo3.png" t="Include" />
+          <e p="new logo4.png" t="Include" />
+          <e p="new logo5.png" t="Include" />
+          <e p="Normal.png" t="Include" />
+          <e p="perfil.png" t="Include" />
+          <e p="Planes.PNG" t="Include" />
+          <e p="Request_Contract_opening_11March2020.dotx" t="Include" />
+          <e p="satellite-dish (1).png" t="Include" />
+          <e p="satellite-dish.png" t="Include" />
+          <e p="shut-down.png" t="Include" />
+        </e>
+      </e>
+      <e p="COMPLETE_FLAT_UI.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
