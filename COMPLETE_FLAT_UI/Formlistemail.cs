@@ -9,12 +9,9 @@ using Oracle.ManagedDataAccess.Client;
 using System.Net;
 using System.Globalization;
 using Newtonsoft.Json;
-using System.Collections.Specialized;
-using System.Web;
-using System.Web.Mvc;
 using System.Collections.Generic;
-using System.Net.Http;
-using RestSharp;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace MAS_EMAIL
 {
@@ -43,7 +40,6 @@ namespace MAS_EMAIL
             InsertarFilas();
         }
         
-
         private void BtnCerrar_Click_1(object sender, EventArgs e)
         {
             this.Close();
@@ -68,13 +64,26 @@ namespace MAS_EMAIL
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             int qr;
-            int fille;
             int count = ckcount();
            // MessageBox.Show(count.ToString(), "path");
             if (count > 0)
             {
-                fille = qrfill();
+                /* progressBar1.Maximum = 100;
+                 progressBar1.Step = 1;
+                 progressBar1.Value = 0;
+
+                 var startTime = DateTime.Now;
+
+
+                 var progress = new Progress<int>(percent =>
+                 {
+                     progressBar1.Value = percent;
+
+                 }); */
+                // await Task.Run(() => DoProcessing(progress));
+                int fille = qrfill();
                 qr = queryst();
+
             }
             else 
             {
@@ -85,10 +94,10 @@ namespace MAS_EMAIL
 
         private void InsertarFilas()
         {
-            //timer1.Enabled = true;
-           // timer1.Interval = Int32.Parse(timebox.Text);
-           // timer1.Start();
-            //int qr = queryst();
+            timer1.Enabled = true;
+            timer1.Interval = Int32.Parse(timebox.Text);
+            timer1.Start();
+            int qr = queryst();
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -1070,7 +1079,6 @@ namespace MAS_EMAIL
             }
             finally
             {
-
                 conn.Close();
                 conn.Dispose();
                 conn = null;
@@ -1097,7 +1105,7 @@ namespace MAS_EMAIL
             {
                 oc.Open();
                 string sData = Convert.ToBase64String(File.ReadAllBytes(filepath));
-                OracleCommand cmd = new OracleCommand("INSERT INTO ACNT_PDF values (:1, :2, :3, :4, SYSDATE,SYSDATE,SYSDATE,'VN','1')", oc);
+                OracleCommand cmd = new OracleCommand("INSERT INTO ACNT_PDF (acnt_no,name,sizef, data,created,modified,publishdate,path,type ) values (:1, :2, :3, :4, SYSDATE,SYSDATE,SYSDATE,'VN','1')", oc);
                 cmd.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, acnt_nos, ParameterDirection.Input));
                 cmd.Parameters.Add(new OracleParameter("2", OracleDbType.NVarchar2, fileType, ParameterDirection.Input));
                 cmd.Parameters.Add(new OracleParameter("3", OracleDbType.NVarchar2, sData.Length, ParameterDirection.Input));
@@ -1114,11 +1122,13 @@ namespace MAS_EMAIL
                 //update ID thông tin preview HĐ cho bảng master
                 string token = null;
                 token = CreateObject();
-                string linkpdf = UploadPic(filepath, token);
+                string linkpdf  = UploadPic(sData, fileType, token);
+
                 if (linkpdf != null && linkpdf.Length > 0)
                 {
+                    string fulllink = "https://www.masvn.com/api" + linkpdf;
                     OracleCommand cmd3 = new OracleCommand("update ACNT_ON set IDCT = :1 where acnt_no = substr(:2,4,7)", oc);
-                    cmd3.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, linkpdf, ParameterDirection.Input));
+                    cmd3.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, fulllink, ParameterDirection.Input));
                     cmd3.Parameters.Add(new OracleParameter("2", OracleDbType.NVarchar2, acnt_nos, ParameterDirection.Input));
                     cmd3.ExecuteNonQuery();
                 }
@@ -1130,23 +1140,9 @@ namespace MAS_EMAIL
                     File.Delete(Path.Combine(AppLocation + "\\" + acnt_nos + ".docx"));
                 }
                 oc.Close();
+                oc.Dispose();
             }
-            /*string checksever = Common.SMTP_SERVER;
-
-            if (checksever != "10.0.31.15") 
-            { 
-                 using (OracleConnection real = MAS_EMAIL.DBUtilsreal.GetDBConnection())
-                 {
-                    real.Open();
-                    OracleCommand cmdreal = new OracleCommand("INSERT INTO DATA_LINK values (:1, :2, :3)", real);
-                    cmdreal.Parameters.Add(new OracleParameter("1", OracleDbType.NVarchar2, sid, ParameterDirection.Input));
-                    cmdreal.Parameters.Add(new OracleParameter("2", OracleDbType.Clob, sdatalink, ParameterDirection.Input));
-                    cmdreal.Parameters.Add(new OracleParameter("3", OracleDbType.NVarchar2, fileType, ParameterDirection.Input));
-                    cmdreal.ExecuteNonQuery();
-                    real.Close();
-                    real.Dispose();
-                 }
-            } */
+           
             
             string get = getpdf(acnt_nos);
 
@@ -1255,7 +1251,6 @@ namespace MAS_EMAIL
             }
             return 0;
         }
-
         private int sendaccon(string acnt_no)
         {
             AppLocation = AppLocation.Replace("file:\\", "");
@@ -1299,7 +1294,7 @@ namespace MAS_EMAIL
                             int up = updatesenmail(acnt_noem);
                             if (up == 0)
                             {
-                                Thread.Sleep(1000);
+                                Thread.Sleep(2000);
                                 int sdop = sendOP(acnt_noem + "*");
                             }
                             
@@ -1315,7 +1310,6 @@ namespace MAS_EMAIL
             conn.Dispose();
             return 0;
         }
-
         private int updatesenmail(string acnt_no)
         {
             OracleConnection conn = DBUtils.GetDBConnection();
@@ -1366,7 +1360,6 @@ namespace MAS_EMAIL
             }
             return 0;
         }
-
         private int queryst()
         {
             OracleConnection conn = DBUtils.GetDBConnection();
@@ -1468,7 +1461,6 @@ namespace MAS_EMAIL
             }
             return 0;
         }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             btnNuevo_Click(sender,e);
@@ -1507,17 +1499,18 @@ namespace MAS_EMAIL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AppLocation = AppLocation.Replace("file:\\", "");
-            string[] file = new string[0];
-           string emailresen = emailrs.Text;
-            int resend = sendaccon(emailresen);
+            string emailresen = emailrs.Text;
+             int resend = sendaccon(emailresen);
         }
         private String CreateObject()
         {
-            int repost = 0; 
+            
             string authean;
             string URL = Common.API;
-            string DATA = @"{""username"":""admin"",""password"":""12345678""}";
+            string user = Common.USERAPI;
+            string pass = Common.PASSAPI;
+            string TEMP = @"{{""username"":""{0}"",""password"":""{1}""}}";
+            string DATA = string.Format(TEMP, user, pass);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL+ "/api/auth/login");
             request.Method = "POST";
             request.ContentType = "application/json";
@@ -1535,7 +1528,6 @@ namespace MAS_EMAIL
                 using (StreamReader responseReader = new StreamReader(webStream))
                 {
                     dynamic stuff = JsonConvert.DeserializeObject(responseReader.ReadToEnd());
-                    repost = stuff.status_code;
                     authean = stuff.data.token;
                 }
             }
@@ -1599,16 +1591,14 @@ namespace MAS_EMAIL
             conn.Dispose();
             return 0;
         }
-        public string UploadPic(string path, string authen)
+        public string UploadPic(string data,string name, string authen)
         {
             string URL = Common.API;
-            string data = Convert.ToBase64String(File.ReadAllBytes(path));
-            string filename = Path.GetFileName(path);
             string link;
 
             string temple = @"{{""data"":""{0}"",""fileName"":""{1}"",""type"":""contract""}}";
 
-            string DATA  =  string.Format(temple,data, filename);
+            string DATA  =  string.Format(temple, data, name); //filename
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL + "/api/common/uploadBase64");
             request.Method = "POST";
             request.ContentType = "application/json";
@@ -1634,47 +1624,76 @@ namespace MAS_EMAIL
             catch (Exception)
             {
                 return "";
-
             }
             return link;
         }
-        public string Create(string file, string authen)
+        private int uplinktemp(string acnt_no,string link)
         {
-            string URL = Common.API;
-            string link;
+            OracleConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            String countinser = "";
             try
             {
-                string requestBody = JsonConvert.SerializeObject(file, Formatting.Indented);
-                var client = new RestClient(URL);
-
-                var request = new RestRequest("/api/common/upload", Method.POST);
-                // .AddHeader("Accept", "application/json")
-                ///   .AddHeader("Authorization", "Bearer "+ authen);
-                // request.AlwaysMultipartFormData = false;
-                //.AddHeader("Content-Type", "application/form-data");
-                // request.AddFileBytes("file", file_get_byte_contents(file),"contract","aplication/pdf");
-                // request.AddCookie();
-                var fileContent = File.ReadAllBytes(file);
-                request.AddFileBytes("file", fileContent, file);
-               // request.AddFile("file",file);
-                request.AddParameter("type", "contract");
-               // request.AddParameter("old_url", "contract");
-                
-                var httpResponse = client.Execute(request);
-
-                string json = httpResponse.Content.ToString();
-                dynamic  document = JsonConvert.DeserializeObject(json);
-                link = document.data.uri;
+                string sql = "update acnt_PDF set link = '"+ link + "',MODIFIED = sysdate where acnt_no ='" + acnt_no + "'";
+                OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
+                int rowCount = cmd.ExecuteNonQuery();
+                countinser = rowCount.ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return ex.ToString();
-                
+                return 1;
             }
-            
-            return link;
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+                conn = null;
+                int ar = queryst();
+            }
+            return 0;
         }
+        private int callapi()
+        {
+            AppLocation = AppLocation.Replace("file:\\", "");
+           
+            string acnt_noem;
+            string name;
+            string data;
 
+            OracleConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+
+            string sql = "select ACNT_NO,NAME,DATA from acnt_PDF  WHERE LINK IS NULL";
+
+            OracleCommand cmd = new OracleCommand(sql, conn);// Tạo một đối tượng Command.
+            using (DbDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        acnt_noem = reader.GetString(0);
+                        name = reader.GetString(1);
+                        data = reader.GetString(2);
+                        string authen = CreateObject();
+                        string upfile = UploadPic(data, name,authen);
+                        int up = uplinktemp(acnt_noem, upfile);
+                    }
+                }
+            }
+            conn.Close();
+            conn.Dispose();
+            return 0;
+        }
+        public void DoProcessing(IProgress<int> progress)
+        {
+            for (int i = 0; i != 100; ++i)
+            {
+                int fille = qrfill();
+                if (progress != null)
+                    progress.Report(i);
+            }
+        }
     }
 }
 

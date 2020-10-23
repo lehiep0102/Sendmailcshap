@@ -1,7 +1,6 @@
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\MAS_EMAIL.exe.config
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\MAS_EMAIL.exe
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\MAS_EMAIL.pdb
-D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\FontAwesome.Sharp.dll
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\Oracle.ManagedDataAccess.dll
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\SendMailMAS.csproj.ResolveComReference.cache
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\MAS_EMAIL.Form1.resources
@@ -19,3 +18,9 @@ D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\MAS_EMAIL.pdb
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\obj\Release\SendMailMAS.csprojAssemblyReference.cache
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\Newtonsoft.Json.dll
 D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\Newtonsoft.Json.xml
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\System.Web.Mvc.dll
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\System.Web.Razor.dll
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\System.Web.WebPages.Razor.dll
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\System.Web.WebPages.dll
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\work\git\cshap\Sendmailcshap\COMPLETE_FLAT_UI\bin\Release\System.Web.WebPages.Deployment.dll

@@ -264,7 +264,6 @@ namespace MAS_EMAIL
         {
             try
             {
-                
                 //Load ORACLE connection string                    
                 Common.ORACLE_SERVER =          GetConfigValue("ORACLE_SERVER");
                 Common.ORACLE_PORT =            GetConfigValue("ORACLE_PORT");
@@ -278,8 +277,10 @@ namespace MAS_EMAIL
                 Common.SMTP_PASSWORD =          GetConfigValue("SMTP_PASSWORD");
                 Common.MAIL_FROM =              GetConfigValue("MAIL_FROM");
                 Common.MAIL_FROM_NAME =         GetConfigValue("MAIL_FROM_NAME");
+               // Load api home page
                 Common.API            =         GetConfigValue("API");
-
+                Common.USERAPI =                GetConfigValue("USERAPI");
+                Common.PASSAPI =                GetConfigValue("PASSAPI");
             }
             catch (Exception)
             {
